@@ -8,37 +8,59 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class HelloGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	float x, y;
+    SpriteBatch batch;
+    Texture img;
+    float x, y, xv, yv;
 
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
-
-	@Override
-	public void render () {
-		if (Gdx.input.isKeyPressed(Input.Keys.W)){
-			y += 1;
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.S)){
-			y -= 1;
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.D)){
-			x += 1;
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.A)){
-			x -= 1;
-		}
+    static final float MAX_VELOCITY = 100;
 
 
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, x, y);
-		batch.end();
-	}
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        img = new Texture("badlogic.jpg");
+    }
+
+    @Override
+    public void render() {
+        move();
+    }
+
+    Gdx.gl.glClearColor(1,0,0,1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    batch.begin();
+    batch.draw(img,x,y);
+    batch.end();
+
+
+    float decelerate(float, velocity) {
+        float deceleration = 0.999f;
+        velocity *= deceleration;
+        if (Math.abs(velocity) < 1) {
+            velocity = 0;
+        }
+
+            return velocity;
+
+
+     void move(){
+         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+             yv = MAX_VELOCITY;
+         }
+         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+             yv = MAX_VELOCITY * -1;
+         }
+         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+             xv = MAX_VELOCITY;
+         }
+         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+             xv = MAX_VELOCITY * -1;
+         }
+
+         y += yv * Gdx.graphics.getDeltaTime();
+         x += xv * Gdx.graphics.getDeltaTime();
+         yv = decelerate(yv);
+         xv = decelerate(xv);
+
+     }
 }
