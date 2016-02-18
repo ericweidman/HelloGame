@@ -32,6 +32,7 @@ public class HelloGame extends ApplicationAdapter {
     batch.draw(img,x,y);
     batch.end();
 
+}
 
     float decelerate(float, velocity) {
         float deceleration = 0.999f;
@@ -40,27 +41,28 @@ public class HelloGame extends ApplicationAdapter {
             velocity = 0;
         }
 
-            return velocity;
+        return velocity;
+    }
 
 
-     void move(){
-         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-             yv = MAX_VELOCITY;
-         }
-         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-             yv = MAX_VELOCITY * -1;
-         }
-         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-             xv = MAX_VELOCITY;
-         }
-         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-             xv = MAX_VELOCITY * -1;
-         }
+    void move() {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            yv = MAX_VELOCITY;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            yv = MAX_VELOCITY * -1;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            xv = MAX_VELOCITY;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            xv = MAX_VELOCITY * -1;
+        }
 
-         y += yv * Gdx.graphics.getDeltaTime();
-         x += xv * Gdx.graphics.getDeltaTime();
-         yv = decelerate(yv);
-         xv = decelerate(xv);
+        y += yv * Gdx.graphics.getDeltaTime();
+        x += xv * Gdx.graphics.getDeltaTime();
+        yv = decelerate(yv);
+        xv = decelerate(xv);
 
-     }
+    }
 }
